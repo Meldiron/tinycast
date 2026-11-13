@@ -150,6 +150,9 @@ enum SettingsFileSchema {
         case .emojiSkinTone: return bind(settings, \.emojiSkinTone)
         case .emojiGridColumns: return bind(settings, \.emojiGridColumns)
         case .emojiCommands: return launcher.commandsBinding(for: key, owner: .emoji)
+        case .screenshotAfterUse: return bind(settings, \.screenshotAfterUse)
+        case .screenshotAutoDelete: return bind(settings, \.screenshotAutoDelete)
+        case .screenshotCommands: return launcher.commandsBinding(for: key, owner: .screenshots)
         case .calendarShowInLauncher: return bind(settings, \.calendarShowInLauncher)
         case .calendarLauncherLimit: return bind(settings, \.calendarLauncherLimit)
         case .calendarSpan: return bind(settings, \.calendarSpan)
@@ -189,6 +192,7 @@ extension ClipboardDefaultAction: SettingsFileRawValue {}
 extension SnippetDefaultAction: SettingsFileRawValue {}
 extension EmojiSkinTone: SettingsFileRawValue {}
 extension EmojiGridColumns: SettingsFileRawValue {}
+extension ScreenshotAfterUse: SettingsFileRawValue {}
 extension DictationModel: SettingsFileRawValue {}
 extension DictationMode: SettingsFileRawValue {}
 extension DictationDestination: SettingsFileRawValue {}
@@ -205,6 +209,19 @@ extension ClipboardRetention: SettingsFileToken {
         case .sixMonths: 180
         case .year: 365
         case .forever: "forever"
+        }
+    }
+}
+
+extension ScreenshotAutoDelete: SettingsFileToken {
+    var settingsToken: SettingsFileJSON {
+        switch self {
+        case .never: "never"
+        case .day: 1
+        case .threeDays: 3
+        case .week: 7
+        case .twoWeeks: 14
+        case .month: 30
         }
     }
 }

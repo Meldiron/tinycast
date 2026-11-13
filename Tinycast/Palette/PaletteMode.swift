@@ -7,6 +7,7 @@ enum PaletteMode: String, CaseIterable, Identifiable {
     case aiHistory
     case calculatorHistory
     case emoji
+    case screenshots
     case fileSearch
     case menuSearch
     case switchWindows
@@ -42,6 +43,7 @@ enum PaletteMode: String, CaseIterable, Identifiable {
         case .aiHistory: return "clock.arrow.circlepath"
         case .calculatorHistory: return "plus.forwardslash.minus"
         case .emoji: return "face.smiling"
+        case .screenshots: return "camera.viewfinder"
         case .fileSearch: return "doc.text.magnifyingglass"
         case .menuSearch: return "menubar.rectangle"
         case .switchWindows: return "macwindow.on.rectangle"
@@ -67,6 +69,7 @@ enum PaletteMode: String, CaseIterable, Identifiable {
         case .calculatorHistory:
             return String(localized: "Do math, convert units, or search your past calculations…")
         case .emoji: return String(localized: "Search emoji and symbols…")
+        case .screenshots: return String(localized: "Search screenshots by name, day or text…")
         case .fileSearch: return String(localized: "Search files and folders…")
         case .menuSearch: return String(localized: "Search menu bar items…")
         case .switchWindows: return String(localized: "Search open windows…")

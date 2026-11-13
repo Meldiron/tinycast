@@ -100,6 +100,13 @@ enum SettingsBackupCoverage {
             "Dictation memory use stays a device-local preference.",
         AppSettingsKey.clipboardTextSearchEnabled.rawValue:
             "Background OCR is an opt-in processing choice on this Mac; a backup must not enable it.",
+        AppSettingsKey.screenshotTextSearchEnabled.rawValue:
+            "Background OCR is an opt-in processing choice on this Mac; a backup must not enable it.",
+        AppSettingsKey.screenshotAutoDelete.rawValue:
+            "An import must never arrive carrying an instruction to move this Mac's files to the "
+            + "Trash.",
+        AppSettingsKey.screenshotAfterUse.rawValue:
+            "Turns a paste into moving the file to the Trash; an import must not arm that unseen.",
         AppSettingsKey.snippetsEnabled.rawValue:
             "Doubles as keyword-expansion consent; an import must not enable keystroke listening.",
         AppSettingsKey.extensionPackageManager.rawValue:

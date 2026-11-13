@@ -81,6 +81,10 @@ struct RootPaletteView: View {
                 index: emojiIndex, frequent: frequentEmoji, pinned: core.pinnedEmoji, core: core, vm: vm,
                 tone: settings.emojiSkinTone, defaultColumns: settings.emojiGridColumns,
                 openActions: openActions)
+        case .screenshots:
+            return ScreenshotsScreen(
+                index: core.screenshotIndex, text: core.screenshotText, core: core, vm: vm,
+                openActions: openActions)
         case .fileSearch:
             return FileSearchScreen(
                 session: fileSearch, core: core, vm: vm, openActions: openActions)
@@ -183,6 +187,18 @@ struct RootPaletteView: View {
             })
     }
 
+    private var screenshotFilterContent: PopoverMenuContent {
+        PopoverMenuContent(
+            items: ScreenshotFilter.allCases.enumerated().map { index, filter in
+                PopoverMenuItem(
+                    title: filter.title, systemImage: filter.systemImage,
+                    startsSection: index == 1
+                ) {
+                    vm.screenshotFilter = filter
+                }
+            })
+    }
+
     private var fileSearchFilterContent: PopoverMenuContent {
         PopoverMenuContent(
             items: FileSearchFilter.allCases.map { filter in
@@ -272,6 +288,8 @@ struct RootPaletteView: View {
                 clipboardFilterContent, width: metrics.size.clipboardFilterMenuWidth)
         case .fileSearchFilter:
             return headerMenu(fileSearchFilterContent, width: metrics.size.fileSearchFilterMenuWidth)
+        case .screenshotFilter:
+            return headerMenu(screenshotFilterContent, width: metrics.size.fileSearchFilterMenuWidth)
         case .emojiCategory:
             return headerMenu(emojiCategoryContent, width: metrics.size.emojiCategoryMenuWidth)
         case .dictionaryScope:
@@ -447,6 +465,7 @@ struct RootPaletteView: View {
             .modifier(ExtensionSelectionForwarder(screen: extensionScreen, selection: vm.selection))
             // A narrower list means the old index points at a different row, or at none.
             .onChange(of: vm.clipboardFilter) { land(restoringSelection: true) }
+            .onChange(of: vm.screenshotFilter) { land() }
             // The filter is part of the query, so narrowing re-runs it rather than thinning rows.
             .onChange(of: vm.fileSearchFilter) {
                 land()
@@ -457,6 +476,7 @@ struct RootPaletteView: View {
                 vm.fileSearchFilter = .all
                 vm.emojiCategoryFilter = .all
                 vm.emojiGridColumnsOverride = nil
+                vm.screenshotFilter = .all
                 if menuOpen { closeMenus() }
                 land(restoringSelection: true)
                 searchFocused = !screen.hidesSearchField
@@ -825,6 +845,14 @@ struct RootPaletteView: View {
                     help: String(localized: "Filter by type  ⌘P"),
                     action: toggleFileSearchFilter)
             }
+            if !isCollapsed, vm.mode == .screenshots {
+                headerGutter(width: metrics.spacing.md)
+                HeaderMenuButton(
+                    title: vm.screenshotFilter.title, systemImage: vm.screenshotFilter.systemImage,
+                    isOpen: openMenu == .screenshotFilter,
+                    help: String(localized: "Filter by type  ⌘P"),
+                    action: toggleScreenshotFilter)
+            }
             if !isCollapsed, vm.mode == .emoji {
                 headerGutter(width: metrics.spacing.md)
                 HeaderMenuButton(
@@ -1110,6 +1138,15 @@ struct RootPaletteView: View {
         open(.fileSearchFilter, highlighting: active)
     }
 
+    private func toggleScreenshotFilter() {
+        if openMenu == .screenshotFilter {
+            closeMenus()
+            return
+        }
+        let active = ScreenshotFilter.allCases.firstIndex(of: vm.screenshotFilter) ?? 0
+        open(.screenshotFilter, highlighting: active)
+    }
+
     private func performFilterAction() -> Bool {
         switch PaletteFilterAction.resolve(
             collapsed: isCollapsed, mode: vm.mode,
@@ -1118,6 +1155,7 @@ struct RootPaletteView: View {
         case .extensionAccessory: toggleExtensionSearchAccessory()
         case .clipboardFilter: toggleClipboardFilter()
         case .fileSearchFilter: toggleFileSearchFilter()
+        case .screenshotFilter: toggleScreenshotFilter()
         case .emojiCategory: toggleEmojiCategory()
         case .dictionaryScope: toggleDictionaryScope()
         case .aiModel: toggleAIModel()
@@ -1370,8 +1408,8 @@ struct RootPaletteView: View {
         case .actions: .bottomTrailing
         case .argumentOptions: .belowHeaderTrailing
         case .inputOptions(let corner): corner
-        case .clipboardFilter, .fileSearchFilter, .emojiCategory, .dictionaryScope, .aiModel,
-            .aiReasoning,
+        case .clipboardFilter, .fileSearchFilter, .screenshotFilter, .emojiCategory, .dictionaryScope,
+            .aiModel, .aiReasoning,
             .aiAttachments, .extensionAccessory:
             .belowHeaderTrailing
         case nil: nil
@@ -1603,6 +1641,7 @@ private enum OpenMenu: Equatable {
     case app
     case clipboardFilter
     case fileSearchFilter
+    case screenshotFilter
     case emojiCategory
     case dictionaryScope
     case aiModel

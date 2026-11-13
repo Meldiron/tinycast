@@ -154,6 +154,11 @@ enum Theme {
         /// Symmetric clearance between the emoji grid and both panel edges.
         static let emojiGridInset: CGFloat = 16
         static let emojiCell: CGFloat = 56
+        /// Wide enough for two legible thumbnails, leaving the preview most of the panel.
+        static let screenshotGridWidth: CGFloat = 340
+        static let screenshotThumbnailAspect: CGFloat = 16 / 10
+        /// Two cells' worth of Retina pixels, so a thumbnail decodes once at the size it shows.
+        static let screenshotThumbnailPixel: CGFloat = 360
         static let menuWidth: CGFloat = 276
         static let formMenuMinimumWidth: CGFloat = 200
         static let formMenuExtraRowsHeight: CGFloat = 20
@@ -444,6 +449,9 @@ enum Theme {
         static let emojiCell = ramp(dark: 0.045, light: 0.04)
         static let emojiHoverBorder = ramp(dark: 0.42, light: 0.34)
         static let emojiSelectionBorder = ramp(dark: 0.92, light: 0.72)
+        /// Accent rather than the emoji grid's white: a screenshot is often white to its edge.
+        static let screenshotSelectionBorder = Color.accentColor
+        static let screenshotHoverBorder = ramp(dark: 0.30, light: 0.26)
         static let emojiInnerBorder = adaptive(
             dark: .srgbInk(0, alpha: 0.72), light: .srgbInk(1, alpha: 0.72))
         static let menuHover = ramp(dark: 0.10, light: 0.09)

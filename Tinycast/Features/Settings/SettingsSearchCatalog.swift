@@ -107,7 +107,7 @@ enum SettingsSearchCatalog {
 
     static let entries: [SettingsSearchEntry] =
         general + applications + systemSettings + systemActions + commands + quicklinks
-        + appleShortcuts + fallbacks + clipboard + snippets + fileSearch + windowManagement
+        + appleShortcuts + fallbacks + clipboard + snippets + fileSearch + screenshots + windowManagement
         + navigation + notes + calendar + emoji + ai + quickActions + dictation + extensions + permissions
         + backup + about
 
@@ -538,6 +538,27 @@ enum SettingsSearchCatalog {
         .init(
             .clipboardDisabledApplications, "Clear history",
             keywords: ["delete", "erase", "wipe"])
+    ]
+
+    private static let screenshots: [SettingsSearchEntry] = [
+        .init(
+            pane: .screenshots,
+            keywords: ["screen capture", "screen recording", "desktop", "capture", "screencapture"]),
+        .init(
+            group: .screenshotsCommands, "Screenshot commands",
+            keywords: ["shortcut", "hotkey", "launcher", "paste latest"]),
+        .init(
+            .screenshotsCleanUp, "After pasting or copying",
+            keywords: ["delete", "trash", "remove", "automatic"]),
+        .init(
+            .screenshotsCleanUp, "Move old captures to the Trash",
+            keywords: ["auto delete", "clean up", "expire", "retention", "old"]),
+        .init(
+            .screenshotsSearch, "Search text in screenshots",
+            keywords: ["OCR", "recognize", "scan", "text"]),
+        .init(
+            .screenshotsFolder, "Screenshot folder",
+            keywords: ["location", "save to", "desktop", "where"])
     ]
 
     private static let emoji: [SettingsSearchEntry] = [

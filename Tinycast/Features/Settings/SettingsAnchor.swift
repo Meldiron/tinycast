@@ -101,6 +101,11 @@ extension SettingsAnchor {
     static let clipboardDisabledApplications = Self(
         tab: .clipboard, title: "Excluded Applications")
 
+    static let screenshotsCommands = Self(tab: .screenshots, title: "Commands")
+    static let screenshotsCleanUp = Self(tab: .screenshots, title: "Clean-Up")
+    static let screenshotsSearch = Self(tab: .screenshots, title: "Search")
+    static let screenshotsFolder = Self(tab: .screenshots, title: "Folder")
+
     static let emojiCommands = Self(tab: .emoji, title: "Commands")
     static let emojiAppearance = Self(tab: .emoji, title: "Appearance")
 

@@ -2,7 +2,7 @@
 
 A native macOS menu-bar launcher: fuzzy app launcher, global and per-app hotkeys, a text/image
 clipboard history, an inline calculator, a floating note, snippets, quicklinks, window management
-and an emoji picker. It also **runs Raycast extensions** natively, in JavaScriptCore.
+an emoji picker and a screenshot manager. It also **runs Raycast extensions** natively, in JavaScriptCore.
 SwiftUI + AppKit, running as an accessory with no Dock icon (`LSUIElement`). Zero third-party
 dependencies.
 

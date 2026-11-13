@@ -57,6 +57,9 @@ final class AppCore {
     let emojiIndex = EmojiIndex()
     let frequentEmoji = FrequentEmojiStore()
     let pinnedEmoji = PinnedEmojiStore()
+    /// Lazy, so launch reads neither the screenshot folder's location nor the stored text.
+    @ObservationIgnored private(set) lazy var screenshotIndex = ScreenshotIndex()
+    @ObservationIgnored private(set) lazy var screenshotText = ScreenshotTextStore()
     let runningApps = RunningAppsMonitor()
     let palette = PaletteState()
     let fileIndexer = FileIndexer()
@@ -200,6 +203,9 @@ final class AppCore {
     @ObservationIgnored private(set) lazy var emojiCoordinator = EmojiCoordinator(
         frequentEmoji: frequentEmoji, settings: settings, windowController: windowController,
         paletteCoordinator: paletteCoordinator)
+    @ObservationIgnored private(set) lazy var screenshotsCoordinator = ScreenshotsCoordinator(
+        settings: settings, index: screenshotIndex, text: screenshotText, palette: palette,
+        paletteCoordinator: paletteCoordinator, windowController: windowController, core: self)
     @ObservationIgnored private(set) lazy var calculatorCoordinator = CalculatorCoordinator(
         calcHistory: calcHistory, paletteCoordinator: paletteCoordinator, core: self)
     @ObservationIgnored private(set) lazy var calendarCoordinator = CalendarCoordinator(
@@ -306,6 +312,7 @@ final class AppCore {
             windowSwitchCoordinator.applyEnabled()
             menuSearchCoordinator.applyEnabled()
             fileSearchCoordinator.applyPolicy()
+            screenshotsCoordinator.applyAutoDelete()
             notesCoordinator.applyEnabled()
             installedAI.launchSettings = { [aiSettings] in aiSettings.launch(for: $0) }
             chatGPTSubscription.launchSettings = { [aiSettings] in aiSettings.launch(for: .codex) }
@@ -724,6 +731,12 @@ final class AppCore {
             { _ = $0.clipboardEnabled }, reproject: { $0.clipboardCoordinator.applyEnabled() })
         track(
             { _ = $0.clipboardTextSearchEnabled }, reproject: { $0.applyClipboardTextSearch() })
+        track(
+            { _ = $0.screenshotAutoDelete },
+            reproject: { $0.screenshotsCoordinator.applyAutoDelete() })
+        track(
+            { _ = $0.screenshotTextSearchEnabled },
+            reproject: { $0.screenshotsCoordinator.applyTextSearch() })
         track({ _ = $0.fileSearchEnabled }, reproject: { $0.fileSearchCoordinator.applyEnabled() })
         track(
             { _ = $0.fileSearchShowInLauncher },

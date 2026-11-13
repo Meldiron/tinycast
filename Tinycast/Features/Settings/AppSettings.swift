@@ -206,6 +206,25 @@ final class AppSettings {
         didSet { defaults.set(emojiGridColumns.rawValue, forKey: Key.emojiGridColumns.rawValue) }
     }
 
+    /// What a paste or copy from Screenshots does with the file afterwards.
+    var screenshotAfterUse: ScreenshotAfterUse {
+        didSet { defaults.set(screenshotAfterUse.rawValue, forKey: Key.screenshotAfterUse.rawValue) }
+    }
+
+    /// Off by default: moving files nobody asked about is something the user opts into.
+    var screenshotAutoDelete: ScreenshotAutoDelete {
+        didSet {
+            defaults.set(screenshotAutoDelete.rawValue, forKey: Key.screenshotAutoDelete.rawValue)
+        }
+    }
+
+    /// Opt-in, as the clipboard's is: Vision runs over every capture and its text is stored.
+    var screenshotTextSearchEnabled: Bool {
+        didSet {
+            defaults.set(screenshotTextSearchEnabled, forKey: Key.screenshotTextSearchEnabled.rawValue)
+        }
+    }
+
     /// How long a closed palette keeps its state before popping back to the root launcher.
     var popToRootTimeout: PopToRootTimeout {
         didSet { defaults.set(popToRootTimeout.rawValue, forKey: Key.popToRootTimeout.rawValue) }
@@ -737,6 +756,13 @@ final class AppSettings {
         emojiGridColumns =
             EmojiGridColumns(rawValue: defaults.integer(forKey: Key.emojiGridColumns.rawValue))
             ?? .default
+        screenshotAfterUse =
+            ScreenshotAfterUse(rawValue: defaults.string(forKey: Key.screenshotAfterUse.rawValue) ?? "")
+            ?? .keep
+        screenshotAutoDelete =
+            ScreenshotAutoDelete(rawValue: defaults.integer(forKey: Key.screenshotAutoDelete.rawValue))
+            ?? .never
+        screenshotTextSearchEnabled = defaults.bool(forKey: Key.screenshotTextSearchEnabled.rawValue)
         popToRootTimeout =
             PopToRootTimeout(rawValue: defaults.integer(forKey: Key.popToRootTimeout.rawValue))
             ?? .immediately

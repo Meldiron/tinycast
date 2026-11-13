@@ -50,6 +50,16 @@ enum Permissions {
         NSWorkspace.shared.open(url)
     }
 
+    /// Where a refused Desktop, Documents or Downloads prompt is turned back on.
+    @MainActor
+    static func openFilesAndFoldersSettings() {
+        guard
+            let url = URL(
+                string: "x-apple.systempreferences:com.apple.preference.security?Privacy_FilesAndFolders")
+        else { return }
+        NSWorkspace.shared.open(url)
+    }
+
     static func calendarAccess() -> CalendarAccess {
         switch EKEventStore.authorizationStatus(for: .event) {
         case .fullAccess: return .granted

@@ -72,6 +72,24 @@ enum Paster {
         }
     }
 
+    /// For a board the caller already wrote: the same activation and ⌘V as `pasteString`.
+    @MainActor
+    static func pasteBoard(into previousApp: NSRunningApplication?) {
+        previousApp?.activate()
+        DispatchQueue.main.asyncAfter(deadline: .now() + activationDelay) {
+            postCommandV()
+        }
+    }
+
+    /// `pasteStringInPlace` for a board the caller already wrote.
+    @MainActor
+    static func pasteBoardInPlace(into app: NSRunningApplication?) {
+        guard let pid = app?.processIdentifier else { return }
+        DispatchQueue.main.asyncAfter(deadline: .now() + directPostDelay) {
+            postCommandV(toPid: pid)
+        }
+    }
+
     @MainActor
     static func copyString(_ text: String) {
         writeString(text)

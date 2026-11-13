@@ -193,6 +193,8 @@ run ClipboardCoordinatorTests Tinycast/Features/Clipboard/UI/ClipboardCoordinato
                            Tinycast/Platform/Images/ImageDerivative.swift \
                            Tinycast/Palette/PaletteState.swift Tinycast/Palette/PaletteMode.swift \
                            Tinycast/Palette/HoverArming.swift \
+                           Tinycast/Features/Screenshots/Model/ScreenCapture.swift \
+                           Tinycast/Features/Screenshots/Model/ScreenshotFilter.swift \
                            Tinycast/Features/Emoji/Model/EmojiCatalog.swift \
                            Tinycast/Features/FileSearch/Model/FileSearchFilter.swift \
                            Tinycast/Features/Quicklinks/Model/Quicklink.swift \
@@ -242,6 +244,9 @@ run index ClipboardThumbnailPerformanceTests \
                            Tinycast/Platform/Images/ImageThumbnail.swift \
                            Tinycast/Platform/Images/ImageDerivative.swift \
                            Tinycast/Platform/Images/ThumbnailCache.swift
+run ScreenshotTests        Tinycast/Features/Screenshots/Model/*.swift
+run ScreenshotScannerTests Tinycast/Features/Screenshots/Model/*.swift \
+                           Tinycast/Features/Screenshots/Service/ScreenshotScanner.swift
 run EmojiTests             Tinycast/Features/Emoji/Model/EmojiCatalog.swift \
                            Tinycast/Features/Emoji/Model/EmojiGridGeometry.swift \
                            Tinycast/Features/Emoji/Model/EmojiData.generated.swift
@@ -304,6 +309,8 @@ run PaletteEscapeTests     Tinycast/Palette/PaletteMode.swift \
                            Tinycast/Features/CustomCommands/Model/CustomCommand.swift
 run PaletteNavigationTests Tinycast/Palette/PaletteState.swift \
                            Tinycast/Palette/PaletteMode.swift \
+                           Tinycast/Features/Screenshots/Model/ScreenCapture.swift \
+                           Tinycast/Features/Screenshots/Model/ScreenshotFilter.swift \
                            Tinycast/Palette/HoverArming.swift \
                            Tinycast/Features/Emoji/Model/EmojiCatalog.swift \
                            Tinycast/Features/Clipboard/Model/ClipboardStore.swift \

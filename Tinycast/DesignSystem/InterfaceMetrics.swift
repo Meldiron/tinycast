@@ -104,6 +104,10 @@ struct InterfaceMetrics: Equatable, Sendable {
         var clipboardPreviewPixel: CGFloat { scaledPoints(Theme.Size.clipboardPreviewPixel, scale) }
         var emojiGridInset: CGFloat { scaledPoints(Theme.Size.emojiGridInset, scale) }
         var emojiCell: CGFloat { scaledPoints(Theme.Size.emojiCell, scale) }
+        var screenshotGridWidth: CGFloat { scaledPoints(Theme.Size.screenshotGridWidth, scale) }
+        var screenshotThumbnailPixel: CGFloat {
+            scaledPoints(Theme.Size.screenshotThumbnailPixel, scale)
+        }
 
         var markdownListMarker: CGFloat { scaledPoints(Theme.Size.markdownListMarker, scale) }
         var markdownQuoteBar: CGFloat { scaledPoints(Theme.Size.markdownQuoteBar, scale) }
